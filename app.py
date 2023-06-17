@@ -1,13 +1,23 @@
-from langchain.llms import OpenAI
-import os
+from langchain.chat_models import ChatAnthropic
+from langchain.prompts.chat import (
+    ChatPromptTemplate,
+    SystemMessagePromptTemplate,
+    AIMessagePromptTemplate,
+    HumanMessagePromptTemplate,
+)
+from langchain.schema import AIMessage, HumanMessage, SystemMessage
 from dotenv import load_dotenv
 
-# Load environment variables from .env file
 load_dotenv()
 
-llm = OpenAI(openai_api_key=os.getenv("OPENAI_API_KEY"))
-llm = OpenAI(temperature=0.9)
+chat = ChatAnthropic()
 
-res = llm.predict("What would be a good company name for a company that makes colorful socks?")
-# >> Feetful of Fun
-print(res)
+messages = [
+    HumanMessage(
+        content="Translate this sentence from English to French. I love programming."
+    )
+]
+res = chat(messages)
+
+ans = res[0]
+reply = ans.content
