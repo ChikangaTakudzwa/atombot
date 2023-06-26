@@ -57,7 +57,7 @@ def conversational_chat(query):
 if 'history' not in st.session_state:
     st.session_state['history'] = []
 if 'generated' not in st.session_state:
-    st.session_state['generated'] = ["Hello ! Ask me anything about " + uploaded_file.name + " 🤗"]
+    st.session_state['generated'] = ["Hello ! Ask me anything about your file"]
 if 'past' not in st.session_state:
     st.session_state['past'] = ["Hey ! 👋"]
     
@@ -79,5 +79,5 @@ with container:
 if st.session_state['generated']:
     with response_container:
         for i in range(len(st.session_state['generated'])):
-            message(st.session_state["past"][i], is_user=True, key=str(i) + '_user', avatar_style="big-smile")
+            message(st.session_state["past"][i], is_user=True, key=str(i) + '_user', avatar_style="adventurer")
             message(st.session_state["generated"][i], key=str(i), avatar_style="thumbs")
