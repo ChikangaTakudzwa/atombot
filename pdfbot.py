@@ -19,7 +19,7 @@ user_api_key = os.getenv("OPENAI_API_KEY")
 data = None
 
 persist_directory = "./storage"
-pdf_path = "./Resident_Permit_Application.pdf"
+pdf_path = "./Politics_in_Zimbabwe.pdf"
 
 loader = PyMuPDFLoader(pdf_path)
 data = loader.load()
