@@ -18,7 +18,10 @@ user_api_key = os.getenv("OPENAI_API_KEY")
 
 data = None
 
-loader = PyMuPDFLoader("./example.pdf")
+persist_directory = "./storage"
+pdf_path = "./Resident_Permit_Application.pdf"
+
+loader = PyMuPDFLoader(pdf_path)
 data = loader.load()
 
 loader = PyMuPDFLoader(pdf_path)
@@ -34,7 +37,7 @@ vectordb = Chroma.from_documents(documents=texts,
 vectordb.persist()
 
 retriever = vectordb.as_retriever(search_kwargs={"k": 3})
-llm = ChatOpenAI(model_name='gpt-4')
+llm = ChatOpenAI(model_name='gpt-3.5-turbo')
 
 qa = RetrievalQA.from_chain_type(llm=llm, chain_type="stuff", retriever=retriever)
 
