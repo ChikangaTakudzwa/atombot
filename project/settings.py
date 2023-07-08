@@ -31,6 +31,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
+CSRF_COOKIE_DOMAIN = None
+CSRF_TRUSTED_ORIGINS = ["https://*.gitpod.io"]
 
 # Application definition
 
@@ -110,7 +112,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Harare'
 
 USE_I18N = True
 

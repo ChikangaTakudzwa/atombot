@@ -4,7 +4,7 @@
 
 aside {
     float: left; /* or "left" to float it to the left side */
-    width: 30%; /* Adjust the width as desired */
+    width: 40vw; /* Adjust the width as desired */
 }
 
 @media (max-width: 768px) {
@@ -14,12 +14,15 @@ aside {
     }
 }
 
+
 #mydi {
     display: flex;
     flex-direction: column;
+    float: right; /* or "left" to float it to the left side */
+    width: 70vw;
     justify-content: space-between;
     align-items: center;
-    height: 100vh;
+    height: auto;
 }
 
 #send_ico {
@@ -30,6 +33,7 @@ aside {
 
 #content-di {
     height: -webkit-fill-available;
+    z-index: inherit;
 }
 
 /* Hide the default scrollbar */
