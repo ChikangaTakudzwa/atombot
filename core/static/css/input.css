@@ -17,7 +17,7 @@ aside {
 #mydi {
     display: flex;
     flex-direction: column;
-    float: right; /* or "left" to float it to the left side */
+    /* float: right; or "left" to float it to the left side */
     justify-content: space-between;
     align-items: center;
     height: auto;
