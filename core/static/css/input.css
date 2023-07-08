@@ -27,3 +27,7 @@ aside {
     align-items: center;
     
 }
+
+#content-di {
+    height: -webkit-fill-available;
+}
