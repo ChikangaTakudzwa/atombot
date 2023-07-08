@@ -1,3 +1,29 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+aside {
+    float: left; /* or "left" to float it to the left side */
+    width: 30%; /* Adjust the width as desired */
+}
+
+@media (max-width: 768px) {
+    aside {
+        float: none; /* Remove the float on smaller screens */
+        width: 100%; /* Make it full width on smaller screens */
+    }
+}
+
+#mydi {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+}
+
+#send_ico {
+    display: flex;
+    align-items: center;
+    
+}
