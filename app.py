@@ -81,6 +81,10 @@ if 'generated' not in st.session_state:
 if 'past' not in st.session_state:
     st.session_state['past'] = [""]
     
+for generated_text in st.session_state['generated']:
+    message(generated_text)
+
+
 #container for the chat history
 response_container = st.container()
 #container for the user's text input
@@ -144,6 +148,10 @@ with container:
 #                 avatar_style="image",
 #                 avatar_url="https://ivesexid.sirv.com/Portfolio/IMG_20230104_000907-removebg-preview.png"
 #             )
+
+for i, past_message in enumerate(st.session_state['past']):
+    message(past_message, is_user=True, key=f"{i}_user")
+    message(st.session_state['generated'][i], key=str(i))
 
 if st.session_state.get('generated'):
     with response_container:
