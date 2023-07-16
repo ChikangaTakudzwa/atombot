@@ -50,28 +50,21 @@
       if (event.keyCode === 13) {
         // var hero = document.getElementById('hero');
         const chat = document.getElementById('chat')
-        hero.style.display = 'none';
-        chat.style.display = 'block';
-      }
-    });
-
-
-
-    document.getElementById("myform").addEventListener("submit", function(event) {
         event.preventDefault(); // Prevent the default form submission
 
         // Retrieve form data
         const prompt = document.getElementById("prompt").value;
         // const email = document.getElementById("email").value;
-
         // Create an object with the form data
         const formData = {
             prompt: prompt,
             // email: email
         };
-
+        // Display form data on the screen
+        const userprompt = document.getElementById("user-prompt");
+        userprompt.textContent = `${prompt}`;
         // Send form data to the backend
-        fetch("/backend-url", {
+        fetch("https://8000-chikangatakudzw-atombot-hwdzvz6lizq.ws-eu101.gitpod.io/chat", {
             method: "POST",
             headers: {
             "Content-Type": "application/json"
@@ -87,7 +80,17 @@
             // Handle any errors that occurred during the request
             console.error(error);
         });
-        });
+        // document.getElementById("myform").addEventListener("submit", function(event) {
+            
+        // });
+        hero.style.display = 'none';
+        chat.style.display = 'block';
+      }
+    });
+
+
+
+    
 
 
 </script>

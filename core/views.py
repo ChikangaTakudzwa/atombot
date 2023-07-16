@@ -9,7 +9,17 @@ def index(request):
 
 def chat(request):
     """"""
-    return render(request, "mainpage/chat.html")
+    if request.method == 'POST':
+        prompt = request.POST.get('prompt')
+
+        # Return a JSON response indicating the success or any other relevant information
+        response_data = {'message': 'Form data processed successfully'}
+        return JsonResponse(response_data)
+
+    # Handle other HTTP methods if needed
+    else:
+        return JsonResponse({'message': 'Invalid request method'})
+    # return render(request, "mainpage/chat.html")
 
 
 def getdata(request):
