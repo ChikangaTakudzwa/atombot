@@ -20,5 +20,6 @@ from core import views
 
 urlpatterns = [
     path('', views.index, name="index"),
-    path('post/', views.getdata, name="getdata" )
+    path('post/', views.getdata, name="getdata" ),
+    path('chat/', views.chat, name="chat"),
 ]

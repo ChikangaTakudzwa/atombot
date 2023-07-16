@@ -1,9 +1,9 @@
 <div class="w-full max-w-3xl mx-auto my-6 bg-transparent border rounded-md dark:border-gray-700 focus-within:ring-gray-300 focus-within:ring-opacity-40">
-    <form hx-post="{% url 'getdata' %}" hx-trigger="submit" class="flex flex-col md:flex-row shadow-lg">
+    <form hx-post="{% url 'chat' %}" hx-trigger="submit" id="myform" class="flex flex-col md:flex-row shadow-lg">
         {% csrf_token %}
         {{ form }}
-        <input id="prompt" type="text" placeholder="Enter prompt" class="flex-1 h-10 px-4 py-2 m-1 text-gray-700 placeholder-gray-400 bg-transparent border-none appearance-none dark:text-gray-200 focus:outline-none focus:placeholder-transparent focus:ring-0" />
-        <button type="submit" id="send_ico" class="flex px-2">
+        <input id="prompt" name="prompt" type="text" placeholder="Enter prompt" hx-Trigger="keyup" hx-Get="{% url 'chat' %}" hx-Target=".toggle-element" class="flex-1 h-10 px-4 py-2 m-1 text-gray-700 placeholder-gray-400 bg-transparent border-none appearance-none dark:text-gray-200 focus:outline-none focus:placeholder-transparent focus:ring-0" />
+        <button type="submit" value="Submit" id="send_ico" hx-Get="{% url 'chat' %}" hx-Target=".toggle-element" class="flex px-2">
             <svg id="mysg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-300">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 15l3-3m0 0l-3-3m3 3h-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
@@ -29,5 +29,65 @@
           svgElement.classList.add('text-gray-700');
         }
     });
+
+    const hero = document.getElementById('hero');
+
+     // Handle the HTMX response to toggle the elements' visibility
+    //  document.body.addEventListener('htmx:responseEnd', function (event) {
+    //   if (event.detail.target === '.toggle-chat-element') {
+    //     var elements = document.querySelectorAll(event.detail.target);
+    //     elements.forEach(function(element) {
+    //       element.style.display = (element.style.display === 'none') ? 'block' : 'none';
+    //     //   hero.classList.add('hidden');
+    //     //   element.classList.remove('hidden');
+    //     });
+    //   }
+    // });
+
+
+    // Hide an element when Enter key is pressed
+    document.getElementById('prompt').addEventListener('keyup', function(event) {
+      if (event.keyCode === 13) {
+        // var hero = document.getElementById('hero');
+        const chat = document.getElementById('chat')
+        hero.style.display = 'none';
+        chat.style.display = 'block';
+      }
+    });
+
+
+
+    document.getElementById("myform").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        // Retrieve form data
+        const prompt = document.getElementById("prompt").value;
+        // const email = document.getElementById("email").value;
+
+        // Create an object with the form data
+        const formData = {
+            prompt: prompt,
+            // email: email
+        };
+
+        // Send form data to the backend
+        fetch("/backend-url", {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json"
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Handle the response from the backend
+            console.log(data);
+        })
+        .catch(error => {
+            // Handle any errors that occurred during the request
+            console.error(error);
+        });
+        });
+
 
 </script>

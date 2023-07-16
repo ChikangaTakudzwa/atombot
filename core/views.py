@@ -7,6 +7,10 @@ def index(request):
     """"""
     return render(request, "index.html")
 
+def chat(request):
+    """"""
+    return render(request, "mainpage/chat.html")
+
 
 def getdata(request):
     if request.method == 'POST':
