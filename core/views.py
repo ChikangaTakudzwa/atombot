@@ -10,16 +10,22 @@ def index(request):
 def chat(request):
     """"""
     if request.method == 'POST':
+
         prompt = request.POST.get('prompt')
+        print(prompt)
+
+        generated_res = "This is the generated response from the bot"
 
         # Return a JSON response indicating the success or any other relevant information
-        response_data = {'message': 'Form data processed successfully'}
-        return JsonResponse(response_data)
+        response_data = {
+            'message': 'Form data processed successfully',
+            'prompt': prompt
+        }
+        return JsonResponse({'response': generated_res})
 
     # Handle other HTTP methods if needed
     else:
         return JsonResponse({'message': 'Invalid request method'})
-    # return render(request, "mainpage/chat.html")
 
 
 def getdata(request):

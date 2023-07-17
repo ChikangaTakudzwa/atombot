@@ -3,7 +3,8 @@
         {% csrf_token %}
         {{ form }}
         <input id="prompt" name="prompt" type="text" placeholder="Enter prompt" hx-Trigger="keyup" class="flex-1 h-10 px-4 py-2 m-1 text-gray-700 placeholder-gray-400 bg-transparent border-none appearance-none dark:text-gray-200 focus:outline-none focus:placeholder-transparent focus:ring-0" />
-        <button type="submit" value="Submit" id="send_ico" hx-Get="{% url 'chat' %}" hx-Target=".toggle-element" class="flex px-2">
+        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+        <button type="submit" value="Submit" id="send_ico" class="flex px-2">
             <svg id="mysg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-300">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 15l3-3m0 0l-3-3m3 3h-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
@@ -15,6 +16,11 @@
     // Get references to the input field and the SVG element
     const input = document.getElementById('prompt');
     const svgElement = document.getElementById('mysg');
+    const promptview = document.getElementById('user-prompt');
+    const formdiv = document.getElementById('myform');
+    const chat = document.getElementById('chat')
+    const hero = document.getElementById('hero');
+    const chatprompt = document.getElementById("chat-prompt");
 
     // Add event listener to detect input changes
     input.addEventListener('input', function() {
@@ -30,84 +36,85 @@
         }
     });
 
-    const hero = document.getElementById('hero');
+    
+    const prompt = input.value.trim();
 
-     // Handle the HTMX response to toggle the elements' visibility
-    //  document.body.addEventListener('htmx:responseEnd', function (event) {
-    //   if (event.detail.target === '.toggle-chat-element') {
-    //     var elements = document.querySelectorAll(event.detail.target);
-    //     elements.forEach(function(element) {
-    //       element.style.display = (element.style.display === 'none') ? 'block' : 'none';
-    //     //   hero.classList.add('hidden');
-    //     //   element.classList.remove('hidden');
-    //     });
-    //   }
-    // });
-
-
-    function getCookie(name) {
-        const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
-        return cookieValue ? cookieValue.pop() : '';
-    }
-
+    // Hide or show the element based on the text field value
+    
 
     // Hide an element when Enter key is pressed
-    document.getElementById('prompt').addEventListener('keyup', function(event) {
+    input.addEventListener('keyup', function(event) {
       if (event.keyCode === 13) {
-        // var hero = document.getElementById('hero');
-        const chat = document.getElementById('chat')
+        
         event.preventDefault(); // Prevent the default form submission
 
-        // Retrieve form data
-        const prompt = document.getElementById("prompt").value;
-        // const email = document.getElementById("email").value;
-        // Create an object with the form data
-        const formData = {
-            prompt: prompt,
-            // email: email
-        };
-        // Display form data on the screen
-        const userprompt = document.getElementById("user-prompt");
-        userprompt.textContent = `${prompt}`;
-
-        hero.style.display = 'none';
-        chat.style.display = 'block';
-
-        const csrfToken = getCookie('csrftoken'); //
-
-        // Send form data to the backend
-        fetch("https://8000-chikangatakudzw-atombot-hwdzvz6lizq.ws-eu101.gitpod.io/post/", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "X-CSRFToken": csrfToken
-            },
-            body: JSON.stringify(formData)
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Handle the response from the backend
-            console.log(data);
-
-            // Reset input fields
-            document.getElementById("name").value = "";
-            document.getElementById("email").value = "";
-        })
-        .catch(error => {
-            // Handle any errors that occurred during the request
-            console.error(error);
-        });
-        // document.getElementById("myform").addEventListener("submit", function(event) {
-            
-        // });
+        // var hero = document.getElementById('hero');
         
+
+        // Retrieve form data
+        
+
+        submitForm();
+        
+        if (prompt) {
+            hero.style.display = 'none';
+            chat.style.display = "block"; // Show the element
+            promptview.textContent = `${prompt}`;
+        } else {
+            chat.style.display = "none"; // Hide the element
+            hero.style.display = 'block';
+        }
+        // Display form data on the screen
+        // const userprompt = promptview;
+        
+
+        // hero.style.display = 'none';
+        // chat.style.display = 'block';
       }
     });
 
+    function submitForm() {
+        
+        const formData = new FormData(formdiv);
 
+        // Add the CSRF token to the headers
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        const headers = new Headers();
+        headers.append('X-CSRFToken', csrfToken);
+        headers.append('Content-Type', 'application/json');
 
+        fetch(form.action, {
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify(Object.fromEntries(formData))
+        })
+        .then(data => {
+            // Handle the response data here
+            console.log(data);
 
-    
+            // Access the generated response
+            const generatedRes = data.response;
 
+            // Use the generated response in the index view
+            chatprompt.textContent = generatedRes;
+
+            // Reset input fields
+            event.target.reset();
+            })
+        // .then(() => {
+        //     // Handle the form submission success
+        //     console.log("Form submission successful");
+
+        //     // Reset input fields
+        //     document.getElementById("prompt").value = "";
+        //     console.log("This code is runnign after .then(data)");
+        //     // Reset input fields
+        //     // form.reset();
+        //     })
+            .catch(error => {
+            // Handle any errors that occurred during the request
+            console.error(error);
+        });
+    }
 
 </script>
