@@ -1,11 +1,16 @@
 <div class="w-full max-w-3xl mx-auto my-6 bg-transparent border rounded-md dark:border-gray-700 focus-within:ring-gray-300 focus-within:ring-opacity-40">
-    <form method="post" action="{% url 'chat' %}" id="myform" class="flex flex-col md:flex-row shadow-lg">
+    <form method="post" action="" id="myform" class="flex flex-col md:flex-row shadow-lg">
         {% csrf_token %}
         {{ form }}
         <input id="prompt" name="prompt" type="text" placeholder="Enter prompt" hx-Trigger="keyup" class="flex-1 h-10 px-4 py-2 m-1 text-gray-700 placeholder-gray-400 bg-transparent border-none appearance-none dark:text-gray-200 focus:outline-none focus:placeholder-transparent focus:ring-0" />
         <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
         <button type="submit" value="Submit" id="send_ico" class="flex px-2">
-            <svg id="mysg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-300">
+            <svg 
+                hx-post="{% url 'chat' %}"
+                hx-trigger="click"
+                hx-target="#content-hero"
+                hx-swap="innerHTML"
+                id="mysg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-300">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 15l3-3m0 0l-3-3m3 3h-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
         </button>  
@@ -48,13 +53,13 @@
         
         event.preventDefault(); // Prevent the default form submission
 
-        submitForm();
+        // submitForm();
         // Display form data on the screen
         const userprompt = promptview;
         
 
-        hero.style.display = 'none';
-        chat.style.display = 'block';
+        // hero.style.display = 'none';
+        // chat.style.display = 'block';
       }
     });
 

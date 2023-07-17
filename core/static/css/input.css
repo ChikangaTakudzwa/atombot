@@ -49,3 +49,7 @@ aside {
     background-color: #1248D8;
     border-radius: 0.4rem;
   }
+
+ #content-chat {
+    min-width: -webkit-fill-available !important;
+}
