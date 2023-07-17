@@ -37,7 +37,7 @@
     });
 
     
-    const prompt = input.value.trim();
+    const prompt = input.value;
 
     // Hide or show the element based on the text field value
     
@@ -48,28 +48,13 @@
         
         event.preventDefault(); // Prevent the default form submission
 
-        // var hero = document.getElementById('hero');
-        
-
-        // Retrieve form data
-        
-
         submitForm();
-        
-        if (prompt) {
-            hero.style.display = 'none';
-            chat.style.display = "block"; // Show the element
-            promptview.textContent = `${prompt}`;
-        } else {
-            chat.style.display = "none"; // Hide the element
-            hero.style.display = 'block';
-        }
         // Display form data on the screen
-        // const userprompt = promptview;
+        const userprompt = promptview;
         
 
-        // hero.style.display = 'none';
-        // chat.style.display = 'block';
+        hero.style.display = 'none';
+        chat.style.display = 'block';
       }
     });
 

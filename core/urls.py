@@ -21,5 +21,5 @@ from core import views
 urlpatterns = [
     path('', views.index, name="index"),
     path('post/', views.getdata, name="post" ),
-    path('chat/', views.chat, name="chat"),
+    path('hx_post_query/', views.chat, name="chat"),
 ]

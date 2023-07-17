@@ -27,6 +27,10 @@ def chat(request):
     else:
         return JsonResponse({'message': 'Invalid request method'})
 
+# htmx method called when event is triggered, must have a return statement to work
+def hx_post_query(request):
+
+    return render(request, 'mainpage/chat.html')
 
 def getdata(request):
     if request.method == 'POST':
